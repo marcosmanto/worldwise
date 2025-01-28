@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import { BASE_URL } from '../constants'
 
 const CitiesContext = createContext()
-
-const BASE_URL = 'http://localhost:8000'
 
 export function CitiesProvider({ children }) {
   const [cities, setCities] = useState([])
