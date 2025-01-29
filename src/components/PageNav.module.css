@@ -11,6 +11,10 @@
   gap: 4rem;
 }
 
+.logged {
+  margin-right: 25rem;
+}
+
 .nav a:link,
 .nav a:visited {
   text-decoration: none;

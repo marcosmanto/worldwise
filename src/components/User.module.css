@@ -15,9 +15,10 @@
   gap: 1.6rem;
 }
 
-.user img {
+.user .img {
   border-radius: 100px;
   height: 4rem;
+  width: auto;
 }
 
 .user button {
