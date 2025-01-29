@@ -5,7 +5,7 @@ import { flagemojiToPNG, formatDate } from './Utils'
 import { useCities } from '../providers/CitiesProvider'
 
 function CityItem({ city }) {
-  const { currentCity, setCurrentCity } = useCities()
+  const { currentCity, setCurrentCity, deleteCity } = useCities()
   const { cityName, emoji, date, id, position } = city
 
   return (
@@ -15,7 +15,15 @@ function CityItem({ city }) {
         <span className={styles.emoji}>{flagemojiToPNG(emoji)}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>({formatDate(date)})</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button
+          className={styles.deleteBtn}
+          onClick={e => {
+            e.preventDefault()
+            deleteCity(city.id)
+          }}
+        >
+          &times;
+        </button>
       </Link>
     </li>
   )
