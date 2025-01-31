@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react'
+import { createContext, useCallback, useContext, useEffect, useReducer } from 'react'
 import { BASE_URL, Actions } from '../constants'
 
 const CitiesContext = createContext()
@@ -72,21 +72,24 @@ export function CitiesProvider({ children }) {
     fetchCities()
   }, [])
 
-  async function getCity(id) {
-    // if city is already loaded skip fetching again
-    if (Number(id) === currentCity.id) return
+  const getCity = useCallback(
+    async function getCity(id) {
+      // if city is already loaded skip fetching again
+      if (Number(id) === currentCity.id) return
 
-    dispatch({ type: Actions.LOADING })
-    try {
-      //setIsLoading(true)
-      const res = await fetch(`${BASE_URL}/cities/${id}`)
-      const data = await res.json()
-      //setCurrentCity(data)
-      dispatch({ type: Actions.CITY_LOADED, payload: data })
-    } catch {
-      dispatch({ type: Actions.REJECTED, payload: 'There was an error loading the city...' })
-    }
-  }
+      dispatch({ type: Actions.LOADING })
+      try {
+        //setIsLoading(true)
+        const res = await fetch(`${BASE_URL}/cities/${id}`)
+        const data = await res.json()
+        //setCurrentCity(data)
+        dispatch({ type: Actions.CITY_LOADED, payload: data })
+      } catch {
+        dispatch({ type: Actions.REJECTED, payload: 'There was an error loading the city...' })
+      }
+    },
+    [currentCity.id]
+  )
 
   function clearCurrentCity() {
     dispatch({ type: Actions.CITY_LOADED, payload: {} })
